@@ -1,0 +1,42 @@
+#design {
+	height: 100%;
+    width: 100%;
+	background-color: #666;
+	background-image: -webkit-linear-gradient(-45deg, #999 24%, #666 26%, #666 49%, #999 51%, #999 74%, #666 76%, #666);
+	background-image: -moz-linear-gradient(-45deg, #999 24%, #666 26%, #666 49%, #999 51%, #999 74%, #666 76%, #666);
+	background-image: -o-linear-gradient(-45deg, #999 24%, #666 26%, #666 49%, #999 51%, #999 74%, #666 76%, #666);
+	background-image: linear-gradient(-45deg, #999 24%, #666 26%, #666 49%, #999 51%, #999 74%, #666 76%, #666);
+	background-size:20px 20px;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	cursor:default;
+	width: 100%;
+	font-family:serif;
+}
+
+.handing {
+	cursor:url('images/grabbing.png') 12 8,default;
+}
+.hand {
+	cursor:url('images/grab.png') 12 8,default;
+}
+
+.cursor {
+	cursor:pointer;
+}
+.flederecha {
+	cursor:url('images/fle-derecha.png') 12 8,default;
+}
+.fleizquierda {
+	cursor:url('images/fle-izquierda.png') 12 8,default;
+}
+.flearriba {
+	cursor:url('images/fle-arriba.png') 12 8,default;
+}
+.fleabajo {
+	cursor:url('images/fle-abajo.png') 12 8,default;
+}

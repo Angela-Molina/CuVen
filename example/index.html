@@ -1,0 +1,143 @@
+<html>
+    <head>
+        <title>Ejemplo 1</title>
+        
+    <link rel="stylesheet" href="data/jquery.ui.all.css">
+    <script src="data/jquery-1.9.1.js"></script>
+    <script src="data/jquery.ui.core.js"></script>
+    <script src="data/jquery.ui.widget.js"></script>
+    <script src="data/jquery.ui.mouse.js"></script>
+    <script src="data/jquery.ui.draggable.js"></script>
+    <script src="data/jquery.ui.position.js"></script>
+    <script src="data/jquery.ui.resizable.js"></script>
+    <script src="data/jquery.ui.button.js"></script>
+    <script src="data/jquery.ui.dialog.js"></script>
+    <script src="data/jquery.ui.effect.js"></script>
+    <script src="data/jquery.ui.effect-blind.js"></script>
+    <script src="data/jquery.ui.effect-explode.js"></script>
+        
+    <link rel="stylesheet" href="data/demos.css">
+        
+        
+        <link rel="stylesheet" type="text/css" href="data/panoviewer.css"/>
+        <script src="../lib/Three.js"></script>
+
+        <script src="../lib/doomevents.js"></script>
+		<script src="../js/hotspot.js"></script>
+        <script src="../js/panorama.js"></script>
+        <script src="../js/panoviewer.js"></script>
+
+    </head>
+    <body>
+        <div id="design" class="hand" >
+
+        </div>
+
+        <div id="mapa" class="dialogo" title="Mapa del Parque">
+            <img src="data/images/mapa_exterior.jpg" width="560px"></img>
+        </div>
+
+		<script>
+
+			window.onload = function() {	
+
+                                        confg = {
+                                            panoramas : [{
+                                                    imagen : "data/images/p1.jpg",
+                                                    lat: 0,
+                                                    lon : 30,
+                                                    hotspots : [{
+                                                            lat: 7,
+                                                            lon : 138,
+                                                            texto: "Comenzar",
+                                                            imagen: "data/images/n1.png",
+                                                            url: "javascript: navegar(1)"
+                                                    },{
+                                                            lat: -7,
+                                                            lon : 80,
+                                                            texto: "Ampliar",
+                                                            imagen: "data/images/n5.png",
+                                                            url: "javascript: detalle_mapa()"
+                                                    }]
+                                            },{
+                                                    imagen : "data/images/p2.jpg",
+                                                    lat: 0,
+                                                    lon : 40,
+                                                    hotspots : [{
+                                                            lat: 2,
+                                                            lon : 3,
+                                                            imagen: "data/images/men.png",
+                                                            url: "javascript: navegar(0)"
+                                                    }]
+                                            }]
+                                        };
+					 c= new Panoviewer('design');
+                     c.configuracion = confg;
+
+					
+		         };
+                         
+       
+			posicion = 0;
+			function seleccionar(idx,coords){
+				if(idx<0 || idx>=confg.panoramas.length)return;
+					c.seleccionarPanorama(idx);
+					if(coords)
+						c.mirarA(coords);
+				posicion = idx;
+			}
+
+			$(function() {
+				$( "#mapa" ).dialog({
+					autoOpen: false,
+					width: 600
+				});
+
+			});
+			detalle_mapa=function(){
+				$( "#mapa" ).dialog( "open" );
+			};
+			posicion = 0;
+			function seleccionar(idx,coords){
+				if(idx<0 || idx>=confg.panoramas.length)return;
+					c.seleccionarPanorama(idx);
+					if(coords)
+						c.mirarA(coords);
+				posicion = idx;
+			}
+			function navegar(destino){
+				switch(posicion){
+					case 0:
+						seleccionar(destino);break;
+				
+					case 1:
+						switch(destino){
+							case 0:	
+								seleccionar(destino,{lat: 0,lon:250});break;
+							default: 
+								seleccionar(destino);break;
+						}
+					break;
+				}
+			}
+        </script>
+      <div title="Menu">
+    
+    <img style="z-index: 100; position: absolute; left: 10px; bottom: 5px; width: 330px; height: 55px;"  src="data/images/barras/menu.png" >
+
+	<img style="z-index: 100; position: absolute; left: 15; bottom: 7px; width: 50px; height: 50px;"   src="data/images/barras/inicio.png" title="Inicio"onclick = "c.irAlInicio();">
+
+	<img style="z-index: 100; position: absolute; left: 75px; bottom: 7px; width: 30px; height: 50px"  src="data/images/barras/zoom+.png" title="Acercar" onclick = "c.acercar();">
+
+	<img style="z-index: 100; position: absolute; left: 115px; bottom: 7px; width: 30px; height: 50px"  src="data/images/barras/zoom-.png" title="Alejar" onclick = "c.alejar();">
+
+	<img style="z-index: 100; position: absolute; left: 155px; bottom: 7px; width: 50px; height: 50px"  src="data/images/barras/ant.png" title="Escena Anterior"onclick ="navegar(posicion-1);">
+
+	<img style="z-index: 100; position: absolute; left: 215px; bottom: 6px; width: 50px; height: 50px"  src="data/images/barras/sig.png" title="Escena Siguiente" onclick ="navegar(posicion+1);">
+	
+	<img style="z-index: 100; position: absolute; left: 275px; bottom: 7px; width: 50px; height: 50px"  src="data/images/barras/ocultar.png" title="Ocultar Iconos" onclick ="c.verPuntos();">
+
+     
+     </div>  
+    </body>
+</html>

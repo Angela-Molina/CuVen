@@ -77,6 +77,7 @@ Hotspot = function ( panoviewer, opts ) {
         isMouseOver = false,
         esImagen = false,
         imagen = undefined;
+        
         var dibujar=function(context) {
             var length= _this.parent.panoviewer.zoom/Math.PI;
             context.save(); 
@@ -85,12 +86,12 @@ Hotspot = function ( panoviewer, opts ) {
                 context.save();
                 context.transform(0, 1, 1, 0, 0, 0); 
                 context.rotate(Math.PI / 180 * 90);
-                context.drawImage(imagen, -_this.scale.x/4, - _this.scale.y/4,_this.scale.x/2,_this.scale.y/2);
+                context.drawImage(imagen, -_this.scale.x/6, - _this.scale.y/6,(length/5),(length/5));//cambios acá: la posición dividido entre 6 y el tamaño escalado
                 context.restore();
             }else{ //si no hay imagen dibujar un pto. 
                 context.fillStyle = 'rgb(179,179,0)'; 
                 context.beginPath();
-                context.arc( 0, 0, 1, 0, PI2, true );
+                context.arc( 0, 0, (length/15), 0, PI2, true );  //cambios aquí: el radio del punto se escala
                     //var d = context.createLinearGradient(0, -0.5 , 0, 0.5);
                     //d.addColorStop(0, "#fe8");
                     //d.addColorStop(1, "#a00");
@@ -98,23 +99,30 @@ Hotspot = function ( panoviewer, opts ) {
                 context.fill();
             }
             
-            if(isMouseOver){
-                    //console.debug((_this.parent.panoviewer.getFov()/Math.PI)/10);
-                    //console.debug(context);
-                    context.save(); 
-                    context.scale(1,1);
-                    context.font = ((length+1)/10)+"px Inpact"; 
-                    // Use a brown fill for our text 
-                    context.fillStyle = 'rgb(212,204,0)'; 
-                    // Text can be aligned when displayed 
-                    context.textAlign = 'rigth'; 
-                    // Draw the text in the middle of the canvas with a max 
-                    //  width set to center properly 
-                    
-                    context.transform(0, 1, 1, 0, 0, 0); 
-                    context.rotate(Math.PI / 180 * 90);
-                    context.fillText(_this.texto, 1, 1);
-                    context.restore(); 
+           if(isMouseOver){ //aquí cambios totales para el tooltip
+ 		 context.scale(1,1);
+  		 context.transform(0, 1, 1, 0, 0, 0); 
+ 		 context.rotate(Math.PI / 180 * 90);
+
+		//sombra para el texto
+		context.shadowColor="black";
+		context.shadowOffsetX=2;
+		context.shadowOffsetY=2;
+		context.shadowBlur=0.5;
+
+
+		if (onMouseWheell){ //si se hace zoom con el mouse, se escala el texto:
+
+			context.font=((length/10))+"pt Monospace";//fuente del texto
+
+			//alineación horizontal y vertical del texto, color, y dibujarlo
+			context.textAlign="start";
+			context.textBaseline="bottom";
+			context.fillStyle= 'white';
+			context.fillText(_this.texto, (length/10),(length/10));
+
+		 }
+   
             }
             context.closePath();
             context.restore(); 
